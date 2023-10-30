@@ -21,38 +21,64 @@ const PLAYERS = [
     "Slingo"
 ];
 
-// initialize players with image and strength
-const initPlayers = (players) => {
-    let detailedPlayers = [];
+    // initialize players with image and strength
     // Create players using for loop
     // Type your code here
-
-    return detailedPlayers;
-}
+    const initPlayers = (players) => {
+        let playerDetails = []
+    for (let i=0;i<players.length;i++){
+        let playerInformation = {}
+        playerInformation.name = players[i]
+        playerInformation.strength = getRandomStrength()
+        playerInformation.image = "./images/super-"+(i+1)+".png"
+        if (i%2 == 0){
+            playerInformation.type = "hero"
+        }else{
+            playerInformation.type = "villain"
+        }
+        playerDetails.push(playerInformation)
+    }
+    console.log(playerDetails)
+    return playerDetails
+    }
 
 // getting random strength
-const getRandomStrength = () => {
+
     // Return a random integer (0,100]
     // Note: You can use Math.random() and Math.ceil()
+const getRandomStrength = () => {
+    return Math.ceil(Math.random()*100)
 }
 
-const buildPlayers = (players, type) => {
-    let fragment = '';
 
     // Loop through players and accumulate HTML template
     // depending of type of player(hero|villain)
     // Type your code here
+const buildPlayers = (players, type) => {
+    let fragment = " "
+    for (let i=0;i<players.length;i++){
+        if (players[i].type === type){
+            let items = 
+            `<div class="player">
+            <img src="${players[i].image}" alt="">
+            <div class="name">${players[i].name}</div>
+            <div class="strength">${players[i].strength}</div>
+            </div>`
+                    
 
-    return fragment;
+            fragment += items;
+        }
+    }
+    return fragment
 }
 // Display players in HTML
-const viewPlayers = (players) => {
+const seePlayers = (players) => {
 
-    document.getElementById('heroes').innerHTML = buildPlayers(players, 'hero');
-    document.getElementById('villains').innerHTML = buildPlayers(players, 'villain');
+    document.getElementById('heroes').innerHTML = buildPlayers(players, 'hero')
+    document.getElementById('villains').innerHTML = buildPlayers(players, 'villain')
 
 }
 
 window.onload = () => {
-    viewPlayers(initPlayers(PLAYERS));
+    seePlayers(initPlayers(PLAYERS))
 }
